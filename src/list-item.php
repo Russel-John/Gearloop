@@ -20,9 +20,7 @@ $current_user = $stmt_user->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCLM GearLoop - List an Item</title>
     <link rel="stylesheet" href="public/css/styles.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -30,7 +28,7 @@ $current_user = $stmt_user->fetch();
         <h1><i class="fas fa-cycle-loop"></i> UCLM GearLoop</h1>
         <nav>
             <a href="dashboard.php"><i class="fas fa-shop"></i> Marketplace</a>
-            <a href="my-cart.php"><i class="fas fa-shopping-cart"></i> My Cart</a>
+            <a href="transactions.php"><i class="fas fa-exchange-alt"></i> Transactions</a>
             <a href="profile.php">
                 <?php if ($current_user['profile_picture']): ?>
                     <img src="<?php echo htmlspecialchars($current_user['profile_picture']); ?>" alt="" class="profile-img-nav">
