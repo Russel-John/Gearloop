@@ -1,7 +1,7 @@
 # UCLM GearLoop
 A campus-exclusive marketplace for the University of Cebu Lapu-Lapu and Mandaue (UCLM), focused on **SDG 12: Responsible Consumption and Production**. It enables students to buy, sell, or swap academic resources in a secure, verified environment.
 
-![Homepage](src\public\images\Screenshot 2026-03-29 014042.png)
+![Homepage](src/public/images/Screenshot 2026-03-29 014042.png)
 
 
 ## 🌟 Key Features
