@@ -63,13 +63,14 @@ Place the project folder inside your XAMPP `htdocs` directory:
 ---
 
 ## Prototype Walkthrough
-1. **Login:** Use the credentials above to enter the secure portal.
-2. **Dashboard:** Browse available academic resources listed by other students.
-3. **List Item:** 
+1. **Register:** Go to the Login page and click "Register here". Fill out the form with your Student ID and Department.
+2. **Login:** Use your newly created credentials (or the sample `student123 / password`) to enter the secure portal.
+3. **Dashboard:** Browse available academic resources listed by other students.
+4. **List Item:** 
    - Click "List an Item".
    - Fill out the form (Name, Category, Condition A-D, Sale/Swap).
    - Submit the listing.
-4. **Verification:** The item will immediately appear on the Marketplace dashboard for all verified users to see.
+5. **Verification:** The item will immediately appear on the Marketplace dashboard for all verified users to see.
 
 ---
 

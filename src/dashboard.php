@@ -45,9 +45,15 @@ $items = $stmt->fetchAll();
             <div class="item-grid">
                 <?php foreach ($items as $item): ?>
                     <div class="item-card">
-                        <div style="height: 150px; background: #ddd; display: flex; align-items: center; justify-content: center; color: #999;">
-                            [Item Image Placeholder]
-                        </div>
+                        <?php if ($item['image_path']): ?>
+                            <div style="height: 150px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #eee;">
+                                <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" style="width: 100%; height: auto; object-fit: cover;">
+                            </div>
+                        <?php else: ?>
+                            <div style="height: 150px; background: #ddd; display: flex; align-items: center; justify-content: center; color: #999;">
+                                [No Image]
+                            </div>
+                        <?php endif; ?>
                         <div class="item-info">
                             <span class="condition-badge">Condition: <?php echo htmlspecialchars($item['item_condition']); ?></span>
                             <?php 

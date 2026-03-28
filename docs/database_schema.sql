@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS items (
     tag ENUM('For Sale', 'For Swap', 'Both') NOT NULL,
     price DECIMAL(10, 2) DEFAULT 0.00,
     department VARCHAR(50) NOT NULL,
+    image_path VARCHAR(255) DEFAULT NULL,
     status ENUM('Available', 'Sold', 'Reserved') DEFAULT 'Available',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -31,5 +32,5 @@ CREATE TABLE IF NOT EXISTS items (
 
 -- Initial sample user
 INSERT IGNORE INTO users (username, password, student_id, department, role) 
-VALUES ('student123', '$2y$10$vY3v6mB/7b.7pI2eC3O.reB3eB1qG7.qK1PqG1.vP2qG1.vP2qG1.', '2023-12345', 'Maritime', 'student');
+VALUES ('student123', '$2y$10$M3ZpDpJDHzTwcXBRCDoZx..e9zrRsyQkmwUOjDXzSC4RfwH55n.C.', '2023-12345', 'Maritime', 'student');
 -- password is 'password'

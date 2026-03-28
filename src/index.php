@@ -29,6 +29,12 @@ if (isset($_SESSION['user_id'])) {
                 </div>
             <?php endif; ?>
 
+            <?php if (isset($_GET['registered'])): ?>
+                <div style="color: green; margin-bottom: 1rem; font-size: 0.9rem;">
+                    Registration successful! Please login below.
+                </div>
+            <?php endif; ?>
+
             <form action="process-login.php" method="POST">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -40,7 +46,10 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <button type="submit" class="btn" style="width: 100%;">Login</button>
             </form>
-            <p style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem;">
+            <p style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
+                Don't have an account? <a href="register.php" style="color: var(--primary-color); font-weight: bold;">Register here</a>
+            </p>
+            <p style="margin-top: 1rem; text-align: center; font-size: 0.8rem; color: #999;">
                 Sample Creds: student123 / password
             </p>
         </div>

@@ -29,10 +29,15 @@ if (!isset($_SESSION['user_id'])) {
             <h2>List an Academic Resource</h2>
             <p style="color: #666; margin-bottom: 2rem;">Post your items to help fellow UCLM students and reduce waste.</p>
 
-            <form action="process-list-item.php" method="POST">
+            <form action="process-list-item.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Item Name/Title</label>
                     <input type="text" id="title" name="title" required placeholder="e.g. Nursing Scrub Suit, Engineering Book">
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Item Image</label>
+                    <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
                 <div style="display: flex; gap: 1rem;">

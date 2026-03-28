@@ -1,0 +1,80 @@
+<?php
+// src/register.php
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header("Location: dashboard.php");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCLM GearLoop - Register</title>
+    <link rel="stylesheet" href="public/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>UCLM GearLoop</h1>
+    </header>
+    <div class="container" style="max-width: 500px; margin-top: 50px;">
+        <div class="form-card">
+            <h2>Create an Account</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Join the campus marketplace for academic resources.</p>
+            
+            <?php if (isset($_GET['error'])): ?>
+                <div style="color: red; margin-bottom: 1rem; font-size: 0.9rem;">
+                    <?php 
+                        if ($_GET['error'] == 'empty') echo "Please fill in all fields.";
+                        elseif ($_GET['error'] == 'password_mismatch') echo "Passwords do not match.";
+                        elseif ($_GET['error'] == 'username_taken') echo "Username or Student ID already exists.";
+                        else echo "An error occurred. Please try again.";
+                    ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="process-register.php" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="e.g. gear_student">
+                </div>
+                
+                <div class="form-group">
+                    <label for="student_id">UCLM Student ID</label>
+                    <input type="text" id="student_id" name="student_id" required placeholder="2023-XXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Maritime">Maritime</option>
+                        <option value="Criminology">Criminology</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Education">Education</option>
+                        <option value="CCS">Computer Studies</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="********">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="********">
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Register</button>
+            </form>
+            
+            <p style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
+                Already have an account? <a href="index.php" style="color: var(--primary-color); font-weight: bold;">Login here</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
