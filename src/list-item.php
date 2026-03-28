@@ -1,10 +1,17 @@
 <?php
 // src/list-item.php
 session_start();
+require_once 'config/db.php';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit;
 }
+
+// Fetch current user data for navigation
+$stmt_user = $pdo->prepare("SELECT profile_picture FROM users WHERE id = ?");
+$stmt_user->execute([$_SESSION['user_id']]);
+$current_user = $stmt_user->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +27,12 @@ if (!isset($_SESSION['user_id'])) {
         <nav>
             <a href="dashboard.php">Marketplace</a>
             <a href="list-item.php">List an Item</a>
+            <a href="profile.php">
+                <?php if ($current_user['profile_picture']): ?>
+                    <img src="<?php echo htmlspecialchars($current_user['profile_picture']); ?>" alt="" class="profile-img-nav">
+                <?php endif; ?>
+                My Profile
+            </a>
             <a href="logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
         </nav>
     </header>

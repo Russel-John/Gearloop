@@ -11,6 +11,11 @@ if (!isset($_SESSION['user_id'])) {
 // Fetch items
 $stmt = $pdo->query("SELECT items.*, users.username FROM items JOIN users ON items.user_id = users.id ORDER BY items.created_at DESC");
 $items = $stmt->fetchAll();
+
+// Fetch current user data for navigation
+$stmt_user = $pdo->prepare("SELECT profile_picture FROM users WHERE id = ?");
+$stmt_user->execute([$_SESSION['user_id']]);
+$current_user = $stmt_user->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +31,12 @@ $items = $stmt->fetchAll();
         <nav>
             <a href="dashboard.php">Marketplace</a>
             <a href="list-item.php">List an Item</a>
+            <a href="profile.php">
+                <?php if ($current_user['profile_picture']): ?>
+                    <img src="<?php echo htmlspecialchars($current_user['profile_picture']); ?>" alt="" class="profile-img-nav">
+                <?php endif; ?>
+                My Profile
+            </a>
             <a href="logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
         </nav>
     </header>
