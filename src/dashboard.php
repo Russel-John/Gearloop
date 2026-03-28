@@ -98,7 +98,7 @@ $current_user = $stmt_user->fetch();
                                 <span><i class="fas fa-user"></i> <?php echo htmlspecialchars($item['username']); ?></span>
                             </div>
 
-                            <div class="flex-between mt-auto">
+                            <div class="card-actions">
                                 <span class="price">
                                     <?php echo ($item['tag'] !== 'For Swap') ? '₱' . number_format($item['price'], 2) : 'Trade Only'; ?>
                                 </span>

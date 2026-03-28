@@ -37,8 +37,8 @@ if (isset($_SESSION['user_id'])) {
 
             <form action="process-login.php" method="POST">
                 <div class="form-group">
-                    <label for="username">Student ID / Username</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username or Student ID</label>
+                    <input type="text" id="username" name="username" required placeholder="e.g. gear_student or 2023-XXXXX">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
