@@ -1,5 +1,5 @@
 <?php
-// src/dashboard.php
+// src/my-listings.php
 session_start();
 require_once 'config/db.php';
 
@@ -8,18 +8,21 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Fetch items
-$stmt = $pdo->query("SELECT items.*, users.username FROM items JOIN users ON items.user_id = users.id ORDER BY items.created_at DESC");
+$user_id = $_SESSION['user_id'];
+
+// Fetch only user's items
+$stmt = $pdo->prepare("SELECT items.*, users.username FROM items JOIN users ON items.user_id = users.id WHERE items.user_id = ? ORDER BY items.created_at DESC");
+$stmt->execute([$user_id]);
 $items = $stmt->fetchAll();
 
 // Fetch current user data for navigation
 $stmt_user = $pdo->prepare("SELECT profile_picture FROM users WHERE id = ?");
-$stmt_user->execute([$_SESSION['user_id']]);
+$stmt_user->execute([$user_id]);
 $current_user = $stmt_user->fetch();
 
 // Count pending incoming requests for notification badge
 $stmt_notif = $pdo->prepare("SELECT COUNT(*) FROM transactions WHERE seller_id = ? AND status = 'Pending'");
-$stmt_notif->execute([$_SESSION['user_id']]);
+$stmt_notif->execute([$user_id]);
 $pending_count = $stmt_notif->fetchColumn();
 ?>
 <!DOCTYPE html>
@@ -27,7 +30,7 @@ $pending_count = $stmt_notif->fetchColumn();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCLM GearLoop - Marketplace</title>
+    <title>UCLM GearLoop - My Listings</title>
     <link rel="stylesheet" href="public/css/styles.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -60,43 +63,35 @@ $pending_count = $stmt_notif->fetchColumn();
     <div class="container">
         <div class="flex-between mb-2">
             <div>
-                <h2 style="font-weight: 800; font-size: 1.8rem; color: var(--primary-color);">Academic Marketplace</h2>
-                <p class="text-muted"><i class="fas fa-leaf"></i> SDG 12: Responsible Consumption & Production</p>
+                <h2 style="font-weight: 800; font-size: 1.8rem; color: var(--primary-color);">My Listings</h2>
+                <p class="text-muted">Manage the items you have shared with the community.</p>
             </div>
             <div class="flex-gap">
-                <a href="my-listings.php" class="btn btn-outline"><i class="fas fa-list"></i> My Listings</a>
+                <a href="dashboard.php" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Marketplace</a>
                 <a href="list-item.php" class="btn"><i class="fas fa-plus"></i> Post New Listing</a>
             </div>
         </div>
 
-        <?php if (isset($_GET['updated'])): ?>
-            <div class="success-message">
-                <i class="fas fa-check-circle"></i> Listing updated successfully!
-            </div>
-        <?php endif; ?>
-
         <?php if (empty($items)): ?>
             <div class="form-card text-center p-3">
                 <i class="fas fa-box-open fa-3x mb-1" style="color: #dee2e6;"></i>
-                <p class="text-muted">No items listed yet. Be the first to share your resources!</p>
-                <a href="list-item.php" class="btn mt-1">List an Item Now</a>
+                <p class="text-muted">You haven't listed any items yet.</p>
+                <a href="list-item.php" class="btn mt-1">List Your First Item</a>
             </div>
         <?php else: ?>
             <div class="item-grid">
                 <?php foreach ($items as $item): ?>
                     <div class="item-card">
-                        <a href="view-item.php?id=<?php echo $item['id']; ?>" class="no-decoration">
-                            <div class="item-img-container">
-                                <?php if ($item['image_path']): ?>
-                                    <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" class="item-img">
-                                <?php else: ?>
-                                    <div class="item-placeholder">
-                                        <i class="fas fa-image fa-2x"></i>
-                                        <span class="text-xs mt-1">No Image</span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </a>
+                        <div class="item-img-container">
+                            <?php if ($item['image_path']): ?>
+                                <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" class="item-img">
+                            <?php else: ?>
+                                <div class="item-placeholder">
+                                    <i class="fas fa-image fa-2x"></i>
+                                    <span class="text-xs mt-1">No Image</span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                         
                         <div class="item-info">
                             <div style="margin-bottom: 0.5rem;">
@@ -106,13 +101,11 @@ $pending_count = $stmt_notif->fetchColumn();
                                 <span class="condition-badge">Grade <?php echo htmlspecialchars($item['item_condition']); ?></span>
                             </div>
 
-                            <a href="view-item.php?id=<?php echo $item['id']; ?>" class="no-decoration">
-                                <h3><?php echo htmlspecialchars($item['title']); ?></h3>
-                            </a>
+                            <h3><?php echo htmlspecialchars($item['title']); ?></h3>
                             
                             <div class="item-info-text">
                                 <span><i class="fas fa-building-columns"></i> <?php echo htmlspecialchars($item['department']); ?></span>
-                                <span><i class="fas fa-user"></i> <?php echo htmlspecialchars($item['username']); ?></span>
+                                <span><i class="fas fa-calendar-alt"></i> Listed on: <?php echo date('M d, Y', strtotime($item['created_at'])); ?></span>
                             </div>
 
                             <div class="card-actions">
@@ -120,11 +113,10 @@ $pending_count = $stmt_notif->fetchColumn();
                                     <?php echo ($item['tag'] !== 'For Swap') ? '₱' . number_format($item['price'], 2) : 'Trade Only'; ?>
                                 </span>
                                 <div class="flex-gap">
-                                    <?php if ($item['user_id'] == $_SESSION['user_id']): ?>
-                                        <span class="text-xs text-muted">Your Listing</span>
-                                    <?php else: ?>
-                                        <a href="view-item.php?id=<?php echo $item['id']; ?>" class="btn btn-sm btn-secondary">View Details</a>
-                                    <?php endif; ?>
+                                    <a href="edit-item.php?id=<?php echo $item['id']; ?>" class="btn btn-sm" title="Edit Listing">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <!-- Potentially add a Delete button here in the future -->
                                 </div>
                             </div>
                         </div>

@@ -19,6 +19,11 @@ if (!$user) {
     header("Location: logout.php");
     exit;
 }
+
+// Count pending incoming requests for notification badge
+$stmt_notif = $pdo->prepare("SELECT COUNT(*) FROM transactions WHERE seller_id = ? AND status = 'Pending'");
+$stmt_notif->execute([$user_id]);
+$pending_count = $stmt_notif->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +32,9 @@ if (!$user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCLM GearLoop - My Profile</title>
     <link rel="stylesheet" href="public/css/styles.css">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
@@ -37,7 +44,12 @@ if (!$user) {
         <h1><i class="fas fa-cycle-loop"></i> UCLM GearLoop</h1>
         <nav>
             <a href="dashboard.php"><i class="fas fa-shop"></i> Marketplace</a>
-            <a href="transactions.php"><i class="fas fa-exchange-alt"></i> Transactions</a>
+            <a href="transactions.php" class="nav-link">
+                <i class="fas fa-exchange-alt"></i> Transactions
+                <?php if ($pending_count > 0): ?>
+                    <span class="badge"><?php echo $pending_count; ?></span>
+                <?php endif; ?>
+            </a>
             <a href="profile.php">
                 <?php if ($user['profile_picture']): ?>
                     <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="" class="profile-img-nav">

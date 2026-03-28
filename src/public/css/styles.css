@@ -167,11 +167,11 @@ nav a:hover {
 .btn {
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 0.6rem 1.2rem;
+    padding: 0.85rem 1.25rem;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     transition: var(--transition);
     display: inline-flex;
@@ -179,6 +179,8 @@ nav a:hover {
     justify-content: center;
     gap: 0.5rem;
     text-decoration: none;
+    line-height: 1.5;
+    box-sizing: border-box;
 }
 
 .btn:hover {
@@ -258,6 +260,25 @@ nav a:hover {
     overflow: hidden;
 }
 
+/* Notification Badge */
+.nav-link {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 800;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: 2px solid var(--primary-color);
+}
+
 /* Forms */
 .form-card {
     background: var(--white);
@@ -276,12 +297,13 @@ nav a:hover {
 
 .form-group input, .form-group select, .form-group textarea {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1.25rem;
     border: 1.5px solid #e9ecef;
-    border-radius: 10px;
-    font-size: 0.95rem;
+    border-radius: 12px;
+    font-size: 1rem;
     transition: var(--transition);
     background: #f8f9fa;
+    box-sizing: border-box;
 }
 
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
