@@ -20,7 +20,30 @@ $user = $stmt->fetch();
 $profile_picture = $user['profile_picture'];
 
 // Handle Image Upload
-if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+$cropped_image = $_POST['cropped_image'] ?? '';
+
+if (!empty($cropped_image)) {
+    $upload_dir = 'public/uploads/';
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0777, true);
+    }
+
+    // Process base64 data
+    $image_parts = explode(";base64,", $cropped_image);
+    $image_base64 = base64_decode($image_parts[1]);
+    
+    $new_filename = md5(uniqid() . time()) . '.jpg';
+    $target_path = $upload_dir . $new_filename;
+
+    if (file_put_contents($target_path, $image_base64)) {
+        // Delete old picture if it exists
+        if ($profile_picture && file_exists($profile_picture)) {
+            unlink($profile_picture);
+        }
+        $profile_picture = $target_path;
+    }
+} elseif (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+    // Fallback for standard upload if cropper wasn't used
     $upload_dir = 'public/uploads/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0777, true);
@@ -31,7 +54,6 @@ if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] ===
     $target_path = $upload_dir . $new_filename;
 
     if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target_path)) {
-        // Delete old picture if it exists and is not the same
         if ($profile_picture && file_exists($profile_picture)) {
             unlink($profile_picture);
         }
