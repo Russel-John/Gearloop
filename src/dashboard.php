@@ -82,7 +82,12 @@ $current_user = $stmt_user->fetch();
                                 <span class="price">
                                     <?php echo ($item['tag'] !== 'For Swap') ? '₱' . number_format($item['price'], 2) : 'Trade Only'; ?>
                                 </span>
-                                <button class="btn btn-secondary btn-sm">View Details</button>
+                                <div class="flex-gap">
+                                    <?php if ($item['user_id'] == $_SESSION['user_id']): ?>
+                                        <a href="edit-item.php?id=<?php echo $item['id']; ?>" class="btn btn-sm btn-secondary no-decoration">Edit</a>
+                                    <?php endif; ?>
+                                    <button class="btn btn-secondary btn-sm">View Details</button>
+                                </div>
                             </div>
                         </div>
                     </div>
