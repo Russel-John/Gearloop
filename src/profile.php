@@ -27,22 +27,28 @@ if (!$user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCLM GearLoop - My Profile</title>
     <link rel="stylesheet" href="public/css/styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 <body>
     <header>
-        <h1>UCLM GearLoop</h1>
+        <h1><i class="fas fa-cycle-loop"></i> UCLM GearLoop</h1>
         <nav>
-            <a href="dashboard.php">Marketplace</a>
-            <a href="list-item.php">List an Item</a>
+            <a href="dashboard.php"><i class="fas fa-shop"></i> Marketplace</a>
+            <a href="list-item.php"><i class="fas fa-plus-circle"></i> List Item</a>
             <a href="profile.php">
                 <?php if ($user['profile_picture']): ?>
                     <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="" class="profile-img-nav">
+                <?php else: ?>
+                    <i class="fas fa-user-circle"></i>
                 <?php endif; ?>
-                My Profile
+                Profile
             </a>
-            <a href="logout.php">Logout</a>
+            <a href="logout.php" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
         </nav>
     </header>
 
