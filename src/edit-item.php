@@ -120,17 +120,22 @@ $current_user = $stmt_user->fetch();
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="department">Target Department</label>
-                    <select id="department" name="department" required>
-                        <option value="General" <?php echo $item['department'] == 'General' ? 'selected' : ''; ?>>General/Any</option>
-                        <option value="Maritime" <?php echo $item['department'] == 'Maritime' ? 'selected' : ''; ?>>Maritime</option>
-                        <option value="Criminology" <?php echo $item['department'] == 'Criminology' ? 'selected' : ''; ?>>Criminology</option>
-                        <option value="Nursing" <?php echo $item['department'] == 'Nursing' ? 'selected' : ''; ?>>Nursing</option>
-                        <option value="Engineering" <?php echo $item['department'] == 'Engineering' ? 'selected' : ''; ?>>Engineering</option>
-                        <option value="Education" <?php echo $item['department'] == 'Education' ? 'selected' : ''; ?>>Education</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="department">Target Department</label>
+                        <select id="department" name="department" required>
+                            <option value="General" <?php echo $item['department'] == 'General' ? 'selected' : ''; ?>>General/Any</option>
+                            <option value="Maritime" <?php echo $item['department'] == 'Maritime' ? 'selected' : ''; ?>>Maritime</option>
+                            <option value="Criminology" <?php echo $item['department'] == 'Criminology' ? 'selected' : ''; ?>>Criminology</option>
+                            <option value="Nursing" <?php echo $item['department'] == 'Nursing' ? 'selected' : ''; ?>>Nursing</option>
+                            <option value="Engineering" <?php echo $item['department'] == 'Engineering' ? 'selected' : ''; ?>>Engineering</option>
+                            <option value="Education" <?php echo $item['department'] == 'Education' ? 'selected' : ''; ?>>Education</option>
+                            <option value="CCS" <?php echo $item['department'] == 'CCS' ? 'selected' : ''; ?>>Computer Studies (CCS)</option>
+                            <option value="CBA" <?php echo $item['department'] == 'CBA' ? 'selected' : ''; ?>>Business & Accountancy (CBA)</option>
+                            <option value="Customs" <?php echo $item['department'] == 'Customs' ? 'selected' : ''; ?>>Customs Administration</option>
+                            <option value="CTHM" <?php echo $item['department'] == 'CTHM' ? 'selected' : ''; ?>>Hospitality & Tourism (CTHM)</option>
+                            <option value="ArtsSciences" <?php echo $item['department'] == 'ArtsSciences' ? 'selected' : ''; ?>>Arts & Sciences</option>
+                        </select>
+                    </div>
 
                 <div class="form-group">
                     <label for="description">Description (Optional)</label>
