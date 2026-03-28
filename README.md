@@ -1,78 +1,57 @@
-# UCLM GearLoop: The Academic Resource Exchange
+# UCLM GearLoop
+A campus-exclusive marketplace for the University of Cebu Lapu-Lapu and Mandaue (UCLM), focused on **SDG 12: Responsible Consumption and Production**. It enables students to buy, sell, or swap academic resources in a secure, verified environment.
 
-## Project Overview
-**UCLM GearLoop** is a secure, campus-exclusive marketplace designed for students of the University of Cebu Lapu-Lapu and Mandaue. 
+## 🌟 Key Features
+- **Academic Marketplace:** Browse and search for academic resources (uniforms, books, equipment) categorized by department.
+- **Transaction Request System:** Instead of direct buying, users send "Buy" or "Trade" requests to initiate negotiations.
+- **Trade Offers:** Buyers can specify exactly what they are offering in exchange during a trade request.
+- **Campus Meetup Coordination:** Once a request is accepted, parties can coordinate meetups at specific UCLM buildings (Basic Ed, CBE, Annex, Old Annex, or Maritime).
+- **Notification System:** Real-time notification badges in the navigation bar for incoming transaction requests.
+- **User Profiles:** Manage your profile with custom bio, department info, and a 1:1 square-cropped profile picture.
+- **GEPO AI Chatbot:** An integrated AI assistant powered by Google Gemini to help students navigate the marketplace and understand campus trade rules.
+- **Modern Responsive UI:** A polished, "app-like" interface featuring soft shadows, rounded corners (16px), and full mobile responsiveness.
 
-### SDG Alignment
-**SDG 12: Responsible Consumption and Production**
-By facilitating the reuse and exchange of academic resources like uniforms and books, GearLoop reduces waste and promotes a circular economy within the campus.
+## 🛠️ Tech Stack
+- **Backend:** PHP 7.4+ (Monolithic)
+- **Database:** MySQL (Managed via PDO)
+- **Frontend:** HTML5, CSS3 (Vanilla), JavaScript
+- **AI Integration:** Google Gemini API (gemini-flash-latest)
+- **Environment:** Designed for XAMPP (Apache/MySQL)
 
-### The Problem
-Students currently rely on fragmented and risky Facebook groups or personal posts to buy/sell/swap items. This leads to:
-- Disorganized searching.
-- Safety risks from non-UC outsiders.
-- High waste when items are discarded instead of reused.
+## 🚀 Setup Instructions
 
-### The Solution
-A unified, verified web platform that integrates:
-- **Secure Marketplace:** Only verified students can enter.
-- **Trading Engine:** Options for "Sale," "Swap," or "Both."
-- **Smart Filtering:** Search by department (Nursing, Maritime, etc.) to find relevant items fast.
+### 1. Database Setup
+1. Start **Apache** and **MySQL** via the XAMPP Control Panel.
+2. Open `phpMyAdmin` (`http://localhost/phpmyadmin`).
+3. Create a new database named `gearloop_db`.
+4. Import the SQL schema located at `docs/database_schema.sql`.
 
----
+### 2. Environment Configuration
+1. In the root directory, locate or create a `.env` file.
+2. Configure your credentials as follows:
+```env
+DB_HOST=localhost
+DB_NAME=gearloop_db
+DB_USER=root
+DB_PASS=
+DB_CHARSET=utf8mb4
+GEMINI_API_KEY=your_google_ai_studio_key_here
+```
 
-## Tech Stack
-- **Frontend:** HTML5, Vanilla CSS3, JavaScript.
-- **Backend:** PHP 7.4+ (Compatible with XAMPP).
-- **Database:** MySQL (XAMPP).
-- **Architecture:** Monolithic PHP.
+### 3. Application Access
+Navigate to the following URL in your web browser:
+`http://localhost/Gearloop/src/index.php`
 
----
+## 📂 Directory Organization
+- `src/`: Contains all PHP logic and page structures.
+- `src/public/css/`: Centralized `styles.css` containing the entire design system.
+- `src/public/js/`: Modular JavaScript files (e.g., `profile.js` for image cropping).
+- `src/public/images/`: Static branding assets like the GEPO AI logo.
+- `src/public/uploads/`: Secure storage for profile pictures and item images.
+- `docs/`: Project documentation and database schemas.
 
-## How to Run & Install
-
-### Prerequisites
-- Install [XAMPP](https://www.apachefriends.org/index.html) or any LAMP/WAMP stack.
-- A web browser (Chrome/Edge/Firefox).
-
-### Step 1: Clone/Download
-Place the project folder inside your XAMPP `htdocs` directory:
-`C:\xampp\htdocs\Gearloop`
-
-### Step 2: Database Setup
-1. Open **phpMyAdmin** (`http://localhost/phpmyadmin`).
-2. Create a new database named `gearloop_db`.
-3. Import the SQL file located at: `/docs/database_schema.sql`.
-   - *This will create the `users` and `items` tables and add a sample student account.*
-
-### Step 3: Configure Database Connection
-1. Open `/src/config/db.php`.
-2. Ensure the `user` and `pass` match your XAMPP MySQL credentials (default is `root` and no password).
-
-### Step 4: Run the Prototype
-1. Start Apache and MySQL in your XAMPP Control Panel.
-2. Open your browser and go to: `http://localhost/Gearloop/src/index.php`.
-
----
-
-## Sample Credentials (No real passwords)
-| Role    | Username    | Password |
-|---------|-------------|----------|
-| Student | student123  | password |
+## 🌿 Sustainable Development Goals
+UCLM GearLoop is committed to **SDG 12: Responsible Consumption and Production**. By facilitating the reuse of uniforms and books, we help reduce the environmental footprint of our campus community.
 
 ---
-
-## Prototype Walkthrough
-1. **Register:** Go to the Login page and click "Register here". Fill out the form with your Student ID and Department.
-2. **Login:** Use your newly created credentials (or the sample `student123 / password`) to enter the secure portal.
-3. **Dashboard:** Browse available academic resources listed by other students.
-4. **List Item:** 
-   - Click "List an Item".
-   - Fill out the form (Name, Category, Condition A-D, Sale/Swap).
-   - Submit the listing.
-5. **Verification:** The item will immediately appear on the Marketplace dashboard for all verified users to see.
-
----
-
-## Architecture Diagram
-*Refer to `/docs/architecture.md` for the system diagram.*
+*Developed for the UCLM Community.*
