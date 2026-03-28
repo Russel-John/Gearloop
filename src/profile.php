@@ -27,6 +27,8 @@ if (!$user) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCLM GearLoop - My Profile</title>
     <link rel="stylesheet" href="public/css/styles.css">
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 </head>
 <body>
     <header>
@@ -85,7 +87,23 @@ if (!$user) {
                     <div class="error-message">Error updating profile. Please try again.</div>
                 <?php endif; ?>
 
-                <form action="process-profile.php" method="POST" enctype="multipart/form-data">
+                <form id="profile-form" action="process-profile.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="profile_picture">Profile Picture (1:1 Aspect Ratio Recommended)</label>
+                        <input type="file" id="profile_picture_input" accept="image/*">
+                        <!-- Hidden input to store cropped image data -->
+                        <input type="hidden" name="cropped_image" id="cropped_image_data">
+                    </div>
+
+                    <!-- Cropper Preview Area -->
+                    <div class="cropper-container-wrapper" id="cropper-wrapper">
+                        <p class="text-small mb-1">Drag to crop your picture:</p>
+                        <div>
+                            <img id="cropper-image">
+                        </div>
+                        <button type="button" id="crop-button" class="btn btn-secondary btn-sm mt-1">Confirm Crop</button>
+                    </div>
+
                     <div class="form-group">
                         <label for="full_name">Full Name</label>
                         <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($user['full_name']); ?>" placeholder="Enter your full name">
@@ -108,15 +126,15 @@ if (!$user) {
                         <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..."><?php echo htmlspecialchars($user['bio']); ?></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="profile_picture">Profile Picture</label>
-                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
-                    </div>
-
                     <button type="submit" class="btn w-100">Update Profile</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Cropper.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <!-- Custom Profile JS -->
+    <script src="public/js/profile.js"></script>
 </body>
 </html>
