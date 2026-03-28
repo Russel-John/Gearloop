@@ -48,7 +48,7 @@ $current_user = $stmt_user->fetch();
         <h1><i class="fas fa-cycle-loop"></i> UCLM GearLoop</h1>
         <nav>
             <a href="dashboard.php"><i class="fas fa-shop"></i> Marketplace</a>
-            <a href="list-item.php"><i class="fas fa-plus-circle"></i> List Item</a>
+            <a href="my-cart.php"><i class="fas fa-shopping-cart"></i> My Cart</a>
             <a href="profile.php">
                 <?php if ($current_user['profile_picture']): ?>
                     <img src="<?php echo htmlspecialchars($current_user['profile_picture']); ?>" alt="" class="profile-img-nav">
