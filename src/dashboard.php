@@ -133,5 +133,84 @@ $pending_count = $stmt_notif->fetchColumn();
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- AI Chatbot Floating Button -->
+    <div class="chatbot-float" id="chatbot-toggle" title="Ask GEPO AI">
+        <img src="public/images/GEPOAI.png" alt="GEPO AI">
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h4><i class="fas fa-robot"></i> GEPO AI</h4>
+            <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message ai">
+                Hello! I am GEPO, your UCLM GearLoop assistant. How can I help you today?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="send-chat"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const chatToggle = document.getElementById('chatbot-toggle');
+        const closeChat = document.getElementById('close-chat');
+        const sendBtn = document.getElementById('send-chat');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+        });
+
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            chatInput.value = '';
+
+            // Add loading placeholder
+            const loadingId = 'loading-' + Date.now();
+            addMessage('...', 'ai', loadingId);
+
+            try {
+                const response = await fetch('process-chat.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+                const data = await response.json();
+                
+                document.getElementById(loadingId).innerText = data.response;
+            } catch (error) {
+                document.getElementById(loadingId).innerText = "Sorry, I'm having trouble connecting right now.";
+            }
+        }
+
+        function addMessage(text, sender, id = null) {
+            const div = document.createElement('div');
+            div.className = 'message ' + sender;
+            if (id) div.id = id;
+            div.innerText = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
 </body>
 </html>
