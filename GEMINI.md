@@ -52,11 +52,27 @@ The project is designed to run in a local LAMP/WAMP/XAMPP environment.
 - **Users:** Verified student/staff accounts.
 - **Items:** Listings categorized by Department, Category (Uniform/Book), and Condition (Grade A to D).
 - **Listing Types:** Support for "For Sale", "For Swap", and "Both".
-
 ---
 
-## Verification & Testing
-Before committing changes:
-- Ensure database interactions are tested against the `gearloop_db` schema.
-- Verify that authentication middleware (session checks) correctly redirects unauthenticated users to `index.php`.
-- Test the end-to-end "List an Item" flow to ensure listings persist in the database and appear on the dashboard.
+## Current State & Progress (As of March 29, 2026)
+
+### ✅ Completed Features
+- **UI/UX Overhaul:** Modernized dashboard with 16px rounded corners, soft shadows, and FontAwesome icons.
+- **Responsiveness:** Grid system optimized for mobile (1 col), tablet (2 col), and desktop.
+- **Profile System:** 1:1 image cropping (Cropper.js), custom bio, and department selection.
+- **Transaction System:** Replaced direct "Buy" with a Request-Accept-Coordinate flow.
+- **Meetup Coordination:** Integrated campus building selection (Basic Ed, CBE, Annex, Old Annex, Maritime).
+- **GEPO AI Chatbot:** Integrated Google Gemini (gemini-flash-latest) with a custom system identity.
+- **Environment Security:** Added `.env` support for DB credentials and API keys.
+- **Navigation:** Standardized headers across all pages with a real-time notification badge for incoming requests.
+
+### 🛠️ Technical Decisions
+- **File Organization:** Strictly separated CSS (`styles.css`) and JS (`profile.js`) from PHP files.
+- **Monolithic Structure:** Logic and HTML are kept within standalone `.php` files (no more `includes/` folder per user preference).
+- **Authentication:** Users can login using either their **Username** or **Student ID**.
+
+### 📋 Next Steps / Pending
+- Implement the actual message/chat database for "Coordinate Meetup".
+- Finalize the chatbot logic once the user adds their live API key.
+- Add "Delete Listing" functionality to My Listings.
+
