@@ -104,6 +104,11 @@ $current_user = $stmt_user->fetch();
                         <option value="Nursing">Nursing</option>
                         <option value="Engineering">Engineering</option>
                         <option value="Education">Education</option>
+                        <option value="CCS">Computer Studies (CCS)</option>
+                        <option value="CBA">Business & Accountancy (CBA)</option>
+                        <option value="Customs">Customs Administration</option>
+                        <option value="CTHM">Hospitality & Tourism (CTHM)</option>
+                        <option value="ArtsSciences">Arts & Sciences</option>
                     </select>
                 </div>
 

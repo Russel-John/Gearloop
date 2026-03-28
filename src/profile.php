@@ -123,7 +123,11 @@ if (!$user) {
                             <option value="Nursing" <?php echo $user['department'] == 'Nursing' ? 'selected' : ''; ?>>Nursing</option>
                             <option value="Engineering" <?php echo $user['department'] == 'Engineering' ? 'selected' : ''; ?>>Engineering</option>
                             <option value="Education" <?php echo $user['department'] == 'Education' ? 'selected' : ''; ?>>Education</option>
-                            <option value="CCS" <?php echo $user['department'] == 'CCS' ? 'selected' : ''; ?>>Computer Studies</option>
+                            <option value="CCS" <?php echo $user['department'] == 'CCS' ? 'selected' : ''; ?>>Computer Studies (CCS)</option>
+                            <option value="CBA" <?php echo $user['department'] == 'CBA' ? 'selected' : ''; ?>>Business & Accountancy (CBA)</option>
+                            <option value="Customs" <?php echo $user['department'] == 'Customs' ? 'selected' : ''; ?>>Customs Administration</option>
+                            <option value="CTHM" <?php echo $user['department'] == 'CTHM' ? 'selected' : ''; ?>>Hospitality & Tourism (CTHM)</option>
+                            <option value="ArtsSciences" <?php echo $user['department'] == 'ArtsSciences' ? 'selected' : ''; ?>>Arts & Sciences</option>
                         </select>
                     </div>
 
