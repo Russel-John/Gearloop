@@ -1,7 +1,7 @@
 # Ignore environment files
 .env
 *.log
-
+*.md
 # Ignore OS files
 .DS_Store
 Thumbs.db
@@ -12,3 +12,6 @@ Thumbs.db
 
 # Ignore vendor files if using composer
 # vendor/
+# Ignore Gemini context files
+GEMINI.md
+gemini.md

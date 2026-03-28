@@ -49,6 +49,82 @@ nav a:hover {
     padding: 0 1rem;
 }
 
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-muted { color: #666; }
+.text-small { font-size: 0.9rem; }
+.text-xs { font-size: 0.8rem; color: #999; }
+.w-100 { width: 100%; }
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-gap { display: flex; gap: 1rem; }
+.flex-1 { flex: 1; }
+.mt-1 { margin-top: 1rem; }
+.mt-1-5 { margin-top: 1.5rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-1-5 { margin-bottom: 1.5rem; }
+.mb-2 { margin-bottom: 2rem; }
+.p-3 { padding: 3rem; }
+.bold { font-weight: bold; }
+.primary-link { color: var(--primary-color); font-weight: bold; text-decoration: none; }
+.primary-link:hover { text-decoration: underline; }
+
+/* Message Styles */
+.error-message { color: red; margin-bottom: 1rem; font-size: 0.9rem; }
+.success-message { color: green; margin-bottom: 1rem; font-size: 0.9rem; }
+
+/* Specific Component Styles */
+.auth-container { margin-top: 50px; }
+.login-container { max-width: 400px; margin-top: 100px; }
+.register-container { max-width: 500px; }
+.list-item-card { max-width: 600px; margin: 0 auto; }
+
+.item-img-container {
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+}
+
+.item-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.item-placeholder {
+    height: 150px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+}
+
+.item-info-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.item-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.btn-sm {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+}
+
+.no-decoration {
+    text-decoration: none;
+}
+
 /* Forms */
 .form-card {
     background: var(--white);

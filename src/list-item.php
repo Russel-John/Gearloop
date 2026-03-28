@@ -25,9 +25,9 @@ if (!isset($_SESSION['user_id'])) {
     </header>
 
     <div class="container">
-        <div class="form-card" style="max-width: 600px; margin: 0 auto;">
+        <div class="form-card list-item-card">
             <h2>List an Academic Resource</h2>
-            <p style="color: #666; margin-bottom: 2rem;">Post your items to help fellow UCLM students and reduce waste.</p>
+            <p class="text-muted mb-2">Post your items to help fellow UCLM students and reduce waste.</p>
 
             <form action="process-list-item.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
@@ -40,8 +40,8 @@ if (!isset($_SESSION['user_id'])) {
                     <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
-                <div style="display: flex; gap: 1rem;">
-                    <div class="form-group" style="flex: 1;">
+                <div class="flex-gap">
+                    <div class="form-group flex-1">
                         <label for="category">Category</label>
                         <select id="category" name="category" required>
                             <option value="Uniform">Uniform</option>
@@ -50,7 +50,7 @@ if (!isset($_SESSION['user_id'])) {
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="form-group" style="flex: 1;">
+                    <div class="form-group flex-1">
                         <label for="condition">Condition Scale</label>
                         <select id="condition" name="condition" required>
                             <option value="A">Grade A (Mint/New)</option>
@@ -61,8 +61,8 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 1rem;">
-                    <div class="form-group" style="flex: 1;">
+                <div class="flex-gap">
+                    <div class="form-group flex-1">
                         <label for="tag">Listing Type</label>
                         <select id="tag" name="tag" required>
                             <option value="For Sale">For Sale</option>
@@ -70,7 +70,7 @@ if (!isset($_SESSION['user_id'])) {
                             <option value="Both">Both</option>
                         </select>
                     </div>
-                    <div class="form-group" style="flex: 1;">
+                    <div class="form-group flex-1">
                         <label for="price">Price (₱)</label>
                         <input type="number" id="price" name="price" step="0.01" value="0.00">
                     </div>
@@ -93,9 +93,9 @@ if (!isset($_SESSION['user_id'])) {
                     <textarea id="description" name="description" rows="4" placeholder="Mention size, edition, or any defects..."></textarea>
                 </div>
 
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button type="submit" class="btn" style="flex: 1;">Post Listing</button>
-                    <a href="dashboard.php" class="btn btn-secondary" style="flex: 1; text-align: center; text-decoration: none;">Cancel</a>
+                <div class="flex-gap mt-2">
+                    <button type="submit" class="btn flex-1">Post Listing</button>
+                    <a href="dashboard.php" class="btn btn-secondary flex-1 text-center no-decoration">Cancel</a>
                 </div>
             </form>
         </div>

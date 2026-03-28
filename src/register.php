@@ -18,13 +18,13 @@ if (isset($_SESSION['user_id'])) {
     <header>
         <h1>UCLM GearLoop</h1>
     </header>
-    <div class="container" style="max-width: 500px; margin-top: 50px;">
+    <div class="container auth-container register-container">
         <div class="form-card">
             <h2>Create an Account</h2>
-            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">Join the campus marketplace for academic resources.</p>
+            <p class="text-muted text-small mb-1-5">Join the campus marketplace for academic resources.</p>
             
             <?php if (isset($_GET['error'])): ?>
-                <div style="color: red; margin-bottom: 1rem; font-size: 0.9rem;">
+                <div class="error-message">
                     <?php 
                         if ($_GET['error'] == 'empty') echo "Please fill in all fields.";
                         elseif ($_GET['error'] == 'password_mismatch') echo "Passwords do not match.";
@@ -68,11 +68,11 @@ if (isset($_SESSION['user_id'])) {
                     <input type="password" id="confirm_password" name="confirm_password" required placeholder="********">
                 </div>
 
-                <button type="submit" class="btn" style="width: 100%;">Register</button>
+                <button type="submit" class="btn w-100">Register</button>
             </form>
             
-            <p style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
-                Already have an account? <a href="index.php" style="color: var(--primary-color); font-weight: bold;">Login here</a>
+            <p class="mt-1-5 text-center text-small">
+                Already have an account? <a href="index.php" class="primary-link">Login here</a>
             </p>
         </div>
     </div>

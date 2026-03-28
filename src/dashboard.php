@@ -31,26 +31,25 @@ $items = $stmt->fetchAll();
     </header>
 
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div class="flex-between mb-2">
             <h2>Academic Resource Marketplace</h2>
-            <div style="color: #666;">SDG 12: Responsible Consumption</div>
         </div>
 
         <?php if (empty($items)): ?>
-            <div class="form-card" style="text-align: center; padding: 3rem;">
+            <div class="form-card text-center p-3">
                 <p>No items listed yet. Be the first to share your resources!</p>
-                <a href="list-item.php" class="btn">List an Item Now</a>
+                <a href="list-item.php" class="btn mt-1">List an Item Now</a>
             </div>
         <?php else: ?>
             <div class="item-grid">
                 <?php foreach ($items as $item): ?>
                     <div class="item-card">
                         <?php if ($item['image_path']): ?>
-                            <div style="height: 150px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #eee;">
-                                <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" style="width: 100%; height: auto; object-fit: cover;">
+                            <div class="item-img-container">
+                                <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" class="item-img">
                             </div>
                         <?php else: ?>
-                            <div style="height: 150px; background: #ddd; display: flex; align-items: center; justify-content: center; color: #999;">
+                            <div class="item-placeholder">
                                 [No Image]
                             </div>
                         <?php endif; ?>
@@ -64,15 +63,15 @@ $items = $stmt->fetchAll();
                             ?>
                             <span class="tag <?php echo $tagClass; ?>"><?php echo htmlspecialchars($item['tag']); ?></span>
                             <h3><?php echo htmlspecialchars($item['title']); ?></h3>
-                            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                            <p class="item-info-text">
                                 Dept: <?php echo htmlspecialchars($item['department']); ?><br>
                                 Seller: <?php echo htmlspecialchars($item['username']); ?>
                             </p>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="flex-between">
                                 <span class="price">
                                     <?php echo ($item['tag'] !== 'For Swap') ? '₱' . number_format($item['price'], 2) : 'Trade Only'; ?>
                                 </span>
-                                <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">View Details</button>
+                                <button class="btn btn-secondary btn-sm">View Details</button>
                             </div>
                         </div>
                     </div>
