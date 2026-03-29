@@ -3,6 +3,8 @@
 ## Introduction
 UCLM GearLoop is a monolithic web application designed for the University of Cebu Lapu-Lapu and Mandaue (UCLM) community. It leverages a standard LAMP-like stack (Linux/Apache/MySQL/PHP) adapted for local development via XAMPP.
 
+![Architecture](https://github.com/Russel-John/Gearloop/blob/master/src/public/images/ArchitectureOverView.jpg)
+
 ## System Components
 
 ### 1. Presentation Layer (Frontend)
