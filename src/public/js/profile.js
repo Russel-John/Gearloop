@@ -22,9 +22,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     
                     cropper = new Cropper(cropperImage, {
-                        aspectRatio: 1,
-                        viewMode: 1,
-                        autoCropArea: 1
+                        aspectRatio: 1, 
+                        viewMode: 1,    
+                        dragMode: 'move', 
+                        autoCropArea: 1, // FILL the entire 1:1 container
+                        restore: false,
+                        guides: false, // Hide guides for a cleaner "box" look
+                        center: false,
+                        highlight: false,
+                        cropBoxMovable: false, // Box doesn't move
+                        cropBoxResizable: false, // Box doesn't resize
+                        toggleDragModeOnDblclick: false,
+                        ready: function() {
+                            // Automatically zoom out to fit perfectly
+                            this.cropper.zoomTo(this.cropper.getContainerData().width / this.cropper.getImageData().naturalWidth);
+                        }
                     });
                 };
                 reader.readAsDataURL(files[0]);

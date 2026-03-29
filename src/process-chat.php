@@ -31,47 +31,43 @@ $stmt = $pdo->prepare("SELECT title, description, category, item_condition, pric
 $stmt->execute();
 $available_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$items_context = "LIST OF AVAILABLE ITEMS ON GEARLOOP:\n";
+$items_context = "CURRENT MARKETPLACE INVENTORY:\n";
 if (empty($available_items)) {
-    $items_context .= "(No items are currently listed in the marketplace.)";
+    $items_context .= "(No items are currently listed.)";
 } else {
     foreach ($available_items as $item) {
         $price_info = ($item['tag'] == 'For Swap') ? "For Swap only" : "Price: PHP " . number_format($item['price'], 2);
-        $items_context .= "- ITEM: {$item['title']}\n  Category: {$item['category']} | Dept: {$item['department']} | Condition: {$item['item_condition']}\n  Type: {$item['tag']} | {$price_info}\n  Description: {$item['description']}\n\n";
+        $items_context .= "- {$item['title']} | Category: {$item['category']} | Condition: {$item['item_condition']} | {$price_info}\n  Description: {$item['description']}\n\n";
     }
 }
 
-// System Identity / Training Data
-$system_identity = "You are GEPO, the friendly AI assistant for UCLM GearLoop (UCLM Campus Marketplace). Your goal is to help students with academic resources. 
+// System Identity
+$system_identity = "You are GEPO, the friendly AI assistant for UCLM GearLoop. 
 
-CRITICAL KNOWLEDGE:
+YOUR EXCLUSIVE KNOWLEDGE BASE:
 $items_context
 
-YOUR INSTRUCTIONS:
-1. If a user describes an item they are looking for (even if they don't know the name), scan the 'LIST OF AVAILABLE ITEMS' above and suggest the best matches.
-2. Provide specific details like the Item Name, Category, and Price/Type from the list.
-3. If no item matches their description, politely inform them and suggest they list a 'Request' or check again later.
-4. Keep responses helpful, professional, and UCLM-focused.
-5. Identify as GEPO always.";
+YOUR RULES:
+1. You only have knowledge of the items listed above. 
+2. If a user asks for something, search your knowledge base and describe the matches in plain text.
+3. Do NOT use special tags like [ITEM:ID]. Just answer naturally.
+4. If an item isn't in the list, politely say it's not currently available and suggest they check back later.
+5. Always identify as GEPO.";
 
 // Applying the "Solution Found": Use v1beta with gemini-flash-latest
 $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . trim($api_key);
 
 $data = [
     "system_instruction" => [
-        "parts" => [
-            ["text" => $system_identity]
-        ]
+        "parts" => [["text" => $system_identity]]
     ],
     "contents" => [
         [
-            "parts" => [
-                ["text" => $user_message]
-            ]
+            "parts" => [["text" => $user_message]]
         ]
     ],
     "generationConfig" => [
-        "temperature" => 0.7, // Lowered for more precise matching
+        "temperature" => 0.7,
         "maxOutputTokens" => 800,
     ]
 ];

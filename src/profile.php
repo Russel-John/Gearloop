@@ -114,7 +114,7 @@ $pending_count = $stmt_notif->fetchColumn();
                     <!-- Cropper Preview Area -->
                     <div class="cropper-container-wrapper" id="cropper-wrapper">
                         <p class="text-small mb-1">Drag to crop your picture:</p>
-                        <div>
+                        <div class="cropper-area">
                             <img id="cropper-image">
                         </div>
                         <button type="button" id="crop-button" class="btn btn-secondary btn-sm mt-1">Confirm Crop</button>
