@@ -6,6 +6,7 @@ graph TD
     User([Student/Admin]) -->|HTTPS| Frontend[Web UI: HTML/CSS/JS]
     Frontend -->|POST/GET| Backend[PHP Server]
     Backend -->|SQL| Database[(MySQL DB: XAMPP)]
+    Backend -->|API Key| Gemini[Google Gemini API: GEPO AI]
     
     subgraph Marketplace Flow
         Backend -->|Fetch Listings| Dashboard[Dashboard View]
