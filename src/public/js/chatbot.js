@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
         addMessage(message, 'user');
         chatInput.value = '';
 
-        const loadingId = 'loading-' + Date.now();
-        addMessage('...', 'ai', loadingId);
+        const typingIndicator = '<div class="typing"><span></span><span></span><span></span></div>';
+        const loadingMsg = addMessage(typingIndicator, 'ai', null, true);
 
         try {
             const response = await fetch('process-chat.php', {
@@ -38,19 +38,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             const data = await response.json();
 
-            document.getElementById(loadingId).innerText = data.response;
+            loadingMsg.innerText = data.response;
         } catch (error) {
-            document.getElementById(loadingId).innerText = "Sorry, I'm having trouble connecting right now.";
+            loadingMsg.innerText = "Sorry, I'm having trouble connecting right now.";
         }
     }
 
-    function addMessage(text, sender, id = null) {
+    function addMessage(text, sender, id = null, isHTML = false) {
         const div = document.createElement('div');
         div.className = 'message ' + sender;
         if (id) div.id = id;
-        div.innerText = text;
+        
+        if (isHTML) {
+            div.innerHTML = text;
+        } else {
+            div.innerText = text;
+        }
+        
         chatMessages.appendChild(div);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+        return div;
     }
 
     sendBtn.addEventListener('click', sendMessage);

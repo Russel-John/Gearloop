@@ -474,6 +474,33 @@ nav a:hover {
     border-bottom-right-radius: 2px;
 }
 
+/* Chat Loading Animation */
+.typing {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 1.2rem;
+}
+
+.typing span {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1s infinite ease-in-out;
+    opacity: 0.6;
+}
+
+.typing span:nth-child(1) { animation-delay: 0s; }
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(-4px); opacity: 1; }
+}
+
 .chat-input-area {
     padding: 1rem;
     border-top: 1px solid #eee;
