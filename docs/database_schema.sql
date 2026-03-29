@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     student_id VARCHAR(20) NOT NULL UNIQUE,
     department VARCHAR(50) NOT NULL,
+    full_name VARCHAR(100) DEFAULT NULL,
+    bio TEXT DEFAULT NULL,
+    profile_picture VARCHAR(255) DEFAULT NULL,
     role ENUM('student', 'admin') DEFAULT 'student',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
