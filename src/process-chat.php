@@ -102,7 +102,18 @@ if ($http_code === 200) {
     echo json_encode(['response' => $ai_response]);
 } else {
     $error_data = json_decode($response, true);
-    $detailed_message = $error_data['error']['message'] ?? 'No detailed message provided by Google.';
-    echo json_encode(['response' => "GEPO AI Error ($http_code): " . $detailed_message]);
+    $detailed_message = $error_data['error']['message'] ?? '';
+    
+    if ($http_code === 503 || strpos($detailed_message, 'high demand') !== false) {
+        $friendly_msg = "GEPO is currently receiving a lot of questions from students! I'm a bit overwhelmed right now. Please try messaging me again in a few moments.";
+    } elseif ($http_code === 429) {
+        $friendly_msg = "I've been talking a lot lately! Let's take a short break. Please try again in a minute.";
+    } elseif ($http_code === 400) {
+        $friendly_msg = "I didn't quite understand that. Could you try rephrasing your message?";
+    } else {
+        $friendly_msg = "I'm having a little trouble connecting to my brain right now. Please check back later!";
+    }
+    
+    echo json_encode(['response' => $friendly_msg, 'debug' => $detailed_message]);
 }
 ?>
