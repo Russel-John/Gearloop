@@ -97,19 +97,19 @@ $pending_count = $stmt_notif->fetchColumn();
             <!-- Item Details Section -->
             <div class="flex-1">
                 <div class="form-card">
-                    <div style="margin-bottom: 1rem;">
+                    <div class="mb-1">
                         <span class="tag tag-<?php echo strtolower(explode(' ', $item['tag'])[1] ?? $item['tag']); ?>">
                             <?php echo htmlspecialchars($item['tag']); ?>
                         </span>
                         <span class="condition-badge">Grade <?php echo htmlspecialchars($item['item_condition']); ?></span>
                     </div>
 
-                    <h2 style="font-size: 2rem; color: var(--primary-color); margin-bottom: 0.5rem;"><?php echo htmlspecialchars($item['title']); ?></h2>
+                    <h2 class="page-header" style="font-size: 2rem; margin-bottom: 0.5rem;"><?php echo htmlspecialchars($item['title']); ?></h2>
                     <p class="price" style="font-size: 1.8rem; margin-bottom: 1.5rem;">
                         <?php echo ($item['tag'] !== 'For Swap') ? '₱' . number_format($item['price'], 2) : 'Trade Only'; ?>
                     </p>
 
-                    <div class="item-info-text" style="font-size: 1rem; gap: 0.75rem; margin-bottom: 2rem;">
+                    <div class="item-info-text mb-2" style="font-size: 1rem; gap: 0.75rem;">
                         <span><i class="fas fa-building-columns"></i> <strong>Department:</strong> <?php echo htmlspecialchars($item['department']); ?></span>
                         <span><i class="fas fa-tag"></i> <strong>Category:</strong> <?php echo htmlspecialchars($item['category']); ?></span>
                         <span><i class="fas fa-calendar-alt"></i> <strong>Posted on:</strong> <?php echo date('M d, Y', strtotime($item['created_at'])); ?></span>
@@ -117,7 +117,7 @@ $pending_count = $stmt_notif->fetchColumn();
 
                     <div class="mb-2">
                         <h4 class="mb-1">Description</h4>
-                        <p class="text-muted" style="line-height: 1.6;">
+                        <p class="text-muted text-line-1-6">
                             <?php echo nl2br(htmlspecialchars($item['description'] ?: 'No description provided.')); ?>
                         </p>
                     </div>

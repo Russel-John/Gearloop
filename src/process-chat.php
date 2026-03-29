@@ -26,6 +26,14 @@ if (!$api_key || empty($api_key) || $api_key === 'your_gemini_api_key_here') {
     exit;
 }
 
+// Fetch current user details to personalize recommendations
+$stmt_user = $pdo->prepare("SELECT username, department, full_name FROM users WHERE id = ?");
+$stmt_user->execute([$_SESSION['user_id']]);
+$user_info = $stmt_user->fetch();
+
+$user_display_name = $user_info['full_name'] ?: $user_info['username'];
+$user_dept = $user_info['department'];
+
 // Fetch available items to "train" the AI on current data
 $stmt = $pdo->prepare("SELECT title, description, category, item_condition, price, department, tag FROM items WHERE status = 'Available' ORDER BY created_at DESC LIMIT 30");
 $stmt->execute();
@@ -37,22 +45,28 @@ if (empty($available_items)) {
 } else {
     foreach ($available_items as $item) {
         $price_info = ($item['tag'] == 'For Swap') ? "For Swap only" : "Price: PHP " . number_format($item['price'], 2);
-        $items_context .= "- {$item['title']} | Category: {$item['category']} | Condition: {$item['item_condition']} | {$price_info}\n  Description: {$item['description']}\n\n";
+        $items_context .= "- {$item['title']} | Dept: {$item['department']} | Category: {$item['category']} | Condition: {$item['item_condition']} | {$price_info}\n  Description: {$item['description']}\n\n";
     }
 }
 
 // System Identity
 $system_identity = "You are GEPO, the friendly AI assistant for UCLM GearLoop. 
 
+USER CONTEXT:
+- Name: $user_display_name
+- Department: $user_dept
+
 YOUR EXCLUSIVE KNOWLEDGE BASE:
 $items_context
 
 YOUR RULES:
 1. You only have knowledge of the items listed above. 
-2. If a user asks for something, search your knowledge base and describe the matches in plain text.
-3. Do NOT use special tags like [ITEM:ID]. Just answer naturally.
-4. If an item isn't in the list, politely say it's not currently available and suggest they check back later.
-5. Always identify as GEPO.";
+2. ALWAYS prioritize recommending items that belong to the user's department ($user_dept) first.
+3. If a user asks for recommendations, explicitly mention that you found items from their department ($user_dept).
+4. If a user asks for something, search your knowledge base and describe the matches in plain text.
+5. Do NOT use special tags like [ITEM:ID]. Just answer naturally.
+6. If an item isn't in the list, politely say it's not currently available and suggest they check back later.
+7. Always identify as GEPO and be supportive of SDG 12 (Responsible Consumption).";
 
 // Applying the "Solution Found": Use v1beta with gemini-flash-latest
 $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . trim($api_key);

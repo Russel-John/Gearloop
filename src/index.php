@@ -22,18 +22,20 @@ if (isset($_SESSION['user_id'])) {
     </header>
     <div class="container login-container">
         <div class="form-card">
-            <h1>GearLoop Login</h1>
-            <p class="text-muted text-small mb-1-5">Access the secure campus marketplace.</p>
+            <div class="form-header">
+                <h2>GearLoop Login</h2>
+                <p class="text-muted text-small">Access the secure campus marketplace.</p>
+            </div>
 
             <?php if (isset($_GET['error'])): ?>
                 <div class="error-message">
-                    Invalid username or password.
+                    <i class="fas fa-exclamation-circle"></i> Invalid username or password.
                 </div>
             <?php endif; ?>
 
             <?php if (isset($_GET['registered'])): ?>
                 <div class="success-message">
-                    Registration successful! Please login.
+                    <i class="fas fa-check-circle"></i> Registration successful! Please login.
                 </div>
             <?php endif; ?>
 
@@ -44,11 +46,11 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="btn w-100">Login</button>
+                <button type="submit" class="btn w-100">Login to GearLoop</button>
             </form>
-            <p class="mt-1-5 text-center text-small">
+            <p class="mt-2 text-center text-small">
                 Don't have an account? <a href="register.php" class="primary-link">Register here</a>
             </p>
             <p class="mt-1 text-center text-xs">
