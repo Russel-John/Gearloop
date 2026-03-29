@@ -1,31 +1,51 @@
-# UCLM GearLoop: Prototype Architecture
+# Architecture Overview - UCLM GearLoop
 
-## System Diagram (High-Level)
-```mermaid
-graph TD
-    User([Student / Admin]) -->|Interacts| UI[Frontend Web UI: HTML/CSS/JS]
-    
-    UI <-->|HTTP POST/GET| Backend[Backend: PHP Server]
+## Introduction
+UCLM GearLoop is a monolithic web application designed for the University of Cebu Lapu-Lapu and Mandaue (UCLM) community. It leverages a standard LAMP-like stack (Linux/Apache/MySQL/PHP) adapted for local development via XAMPP.
 
-    subgraph Data Storage Layer
-        Backend <-->|SQL Queries| DB[(MySQL DB: gearloop_db)]
-        DB -.-> Users[users table]
-        DB -.-> Items[items table]
-    end
+## System Components
 
-    subgraph External Service
-        Backend <-->|JSON / API Key| Gemini[Google Gemini API: GEPO AI]
-    end
-```
+### 1. Presentation Layer (Frontend)
+- **Technologies:** HTML5, Vanilla CSS3, Vanilla JavaScript.
+- **Key Features:**
+  - Responsive design for mobile, tablet, and desktop.
+  - Interactive elements like the GEPO AI Chatbot and profile image cropping (Cropper.js).
+  - Consistent UCLM branding (Blue & Yellow).
 
-## Component Integration
-The prototype integrates three core components as required:
-1.  **Frontend UI:** A responsive web interface styled with UCLM brand colors (Blue/Yellow).
-2.  **Backend Logic:** PHP scripts handle session management, data validation, and database interactions.
-3.  **Data Storage:** A MySQL database stores user profiles and marketplace listings, ensuring persistent data across sessions.
+### 2. Application Layer (Backend)
+- **Technologies:** PHP 7.4+.
+- **Architecture:** Monolithic architecture where logic and UI are managed within standalone `.php` files.
+- **Key Processes:**
+  - **Authentication:** Session-based login using Username or Student ID.
+  - **Item Management:** CRUD operations for marketplace listings.
+  - **Transaction Flow:** Request-Accept-Coordinate system for campus meetups.
+  - **AI Integration:** `process-chat.php` handles communication with the Google Gemini API.
 
-## Core Flow (End-to-End)
-- **Step 1 (Request):** The student submits a "List an Item" form with resource details.
-- **Step 2 (Process):** The PHP backend (`process-list-item.php`) receives the data and performs a SQL `INSERT`.
-- **Step 3 (Storage):** Data is saved in the `items` table of `gearloop_db`.
-- **Step 4 (Response):** The system redirects the user to the `dashboard.php`, where the new item is immediately fetched and displayed to all users.
+### 3. Data Layer (Persistence)
+- **Database:** MySQL.
+- **Access Method:** PHP Data Objects (PDO) with prepared statements for security against SQL injection.
+- **Schema:**
+  - `users`: Stores student/staff profiles and credentials.
+  - `items`: Manages marketplace listings and their status.
+  - `transactions`: Tracks swap/sale requests and meetup details.
+
+### 4. External Integrations
+- **Google Gemini API:** Powering the GEPO AI Chatbot for intelligent item recommendations and marketplace assistance.
+- **FontAwesome:** For consistent iconography across the platform.
+
+## Request Lifecycle & Data Flow
+
+1.  **User Interaction:** A user performs an action in the browser (e.g., searches for an item).
+2.  **Server Request:** The browser sends an HTTPS request to the corresponding PHP file (e.g., `dashboard.php`).
+3.  **Authentication & Config:** The application initializes the session and loads database credentials from the `.env` file via `config/db.php`.
+4.  **Database Query:** PHP executes a PDO query to fetch or update data in the `gearloop_db`.
+5.  **AI Processing (Optional):** If the chatbot is engaged, `process-chat.php` sends a cURL request to the external Gemini API, providing it with the current marketplace context.
+6.  **Response Delivery:** The server returns the final HTML/JSON to the browser, and the UI is updated dynamically.
+
+## Security Considerations
+- **Environment Variables:** Sensitive credentials (API keys, DB passwords) are stored in a `.env` file and never hard-coded.
+- **SQL Injection Prevention:** Universal use of PDO prepared statements.
+- **Session Security:** All protected routes verify active user sessions before processing requests.
+
+---
+*Refer to `docs/architecture_diagram.xml` for a visual representation in draw.io.*
