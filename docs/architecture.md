@@ -3,14 +3,18 @@
 ## System Diagram (High-Level)
 ```mermaid
 graph TD
-    User([Student/Admin]) -->|HTTPS| Frontend[Web UI: HTML/CSS/JS]
-    Frontend -->|POST/GET| Backend[PHP Server]
-    Backend -->|SQL| Database[(MySQL DB: XAMPP)]
+    User([Student / Admin]) -->|Interacts| UI[Frontend Web UI: HTML/CSS/JS]
     
-    subgraph Marketplace Flow
-        Backend -->|Fetch Listings| Dashboard[Dashboard View]
-        Backend -->|Save New Item| DB_Items[Items Table]
-        Backend -->|Verify Login| DB_Users[Users Table]
+    UI <-->|HTTP POST/GET| Backend[Backend: PHP Server]
+
+    subgraph Data Storage Layer
+        Backend <-->|SQL Queries| DB[(MySQL DB: gearloop_db)]
+        DB -.-> Users[users table]
+        DB -.-> Items[items table]
+    end
+
+    subgraph External Service
+        Backend <-->|JSON / API Key| Gemini[Google Gemini API: GEPO AI]
     end
 ```
 
