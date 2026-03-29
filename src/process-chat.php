@@ -26,22 +26,52 @@ if (!$api_key || empty($api_key) || $api_key === 'your_gemini_api_key_here') {
     exit;
 }
 
-// System Identity
-$system_identity = "You are GEPO, the friendly AI assistant for UCLM GearLoop (UCLM Campus Marketplace). Your goal is to help students with academic resources. Always be helpful and professional and identify as GEPO.";
+// Fetch available items to "train" the AI on current data
+$stmt = $pdo->prepare("SELECT title, description, category, item_condition, price, department, tag FROM items WHERE status = 'Available' ORDER BY created_at DESC LIMIT 30");
+$stmt->execute();
+$available_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$items_context = "LIST OF AVAILABLE ITEMS ON GEARLOOP:\n";
+if (empty($available_items)) {
+    $items_context .= "(No items are currently listed in the marketplace.)";
+} else {
+    foreach ($available_items as $item) {
+        $price_info = ($item['tag'] == 'For Swap') ? "For Swap only" : "Price: PHP " . number_format($item['price'], 2);
+        $items_context .= "- ITEM: {$item['title']}\n  Category: {$item['category']} | Dept: {$item['department']} | Condition: {$item['item_condition']}\n  Type: {$item['tag']} | {$price_info}\n  Description: {$item['description']}\n\n";
+    }
+}
+
+// System Identity / Training Data
+$system_identity = "You are GEPO, the friendly AI assistant for UCLM GearLoop (UCLM Campus Marketplace). Your goal is to help students with academic resources. 
+
+CRITICAL KNOWLEDGE:
+$items_context
+
+YOUR INSTRUCTIONS:
+1. If a user describes an item they are looking for (even if they don't know the name), scan the 'LIST OF AVAILABLE ITEMS' above and suggest the best matches.
+2. Provide specific details like the Item Name, Category, and Price/Type from the list.
+3. If no item matches their description, politely inform them and suggest they list a 'Request' or check again later.
+4. Keep responses helpful, professional, and UCLM-focused.
+5. Identify as GEPO always.";
 
 // Applying the "Solution Found": Use v1beta with gemini-flash-latest
 $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . trim($api_key);
 
 $data = [
+    "system_instruction" => [
+        "parts" => [
+            ["text" => $system_identity]
+        ]
+    ],
     "contents" => [
         [
             "parts" => [
-                ["text" => $system_identity . "\n\nUser Question: " . $user_message]
+                ["text" => $user_message]
             ]
         ]
     ],
     "generationConfig" => [
-        "temperature" => 1,
+        "temperature" => 0.7, // Lowered for more precise matching
         "maxOutputTokens" => 800,
     ]
 ];
