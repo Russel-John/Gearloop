@@ -1,0 +1,52 @@
+# Gearloop — System Overview
+
+## Slide 1: Title Slide
+- **Title**: Gearloop — System Overview  
+- **Subtitle**: repo: Russel-John/Gearloop  
+- **Speaker notes**: Brief intro, author Russel-John.
+
+## Slide 2: What is the system?
+- **Description**: Gearloop is a marketplace platform for UCLM students/staff to list and exchange items (sale/swap).  
+- **Speaker notes**: Expand on listing features, user roles.
+
+## Slide 3: Purpose of the system
+- **Purpose**:  
+  - Facilitate buying/selling/swapping  
+  - Reuse of university resources  
+  - Connect students  
+- **Speaker notes**: Benefits.
+
+## Slide 4: Data model overview
+- **High-level**: Users, items tables, relationships  
+- **Speaker notes**: Overview of schema and ERD.
+
+## Slide 5: Entity Slides
+- **Users Table**:  
+  - Attributes:  
+    - id (int) - Primary key  
+    - name (string)  
+    - email (string)  
+    - etc.  
+- **Items Table**:  
+  - Attributes:  
+    - id (int) - Primary key  
+    - user_id (int) - Foreign key  
+    - description (string)  
+    - etc.  
+- **Speaker notes**: Explanation per field.
+
+## Slide 6: Entity Relationships
+- **Description**: Users 1:N Items  
+- **Speaker notes**: Relationship examples and cardinalities.
+
+## Slide 7: Entity Relationship Diagram
+- **Description**: Diagram illustrating tables and relationships.  
+- **Speaker notes**: Overview of diagram.
+
+## Slide 8: Data Dictionary
+- **Description**: Per-table slides listing Field name, Datatype, Constraints, Description for every field in users and items.  
+- **Speaker notes**: How to read the data dictionary.
+
+## Slide 9: Notes & Next steps
+- **Description**: How to extend schema and where to find docs.
+- **Speaker notes**: Information on next steps.
